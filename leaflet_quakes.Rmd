@@ -5,12 +5,15 @@ date: "10/10/2019"
 output: html_document
 ---
 
+Leaflet is a really good package for creating interactive maps. Here I've put together an example for visualising earthquake data from around Fiji.
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r}
 library(leaflet)
+library(htmltools)
 ```
 
 
@@ -28,7 +31,7 @@ leaflet(quakes) %>%
   setView(mean(quakes$long), mean(quakes$lat), zoom = 4)%>% 
   addCircleMarkers(lng=quakes$long, lat=quakes$lat,radius = 0.01*quakes$depth, 
                    color = ~pal(quakes$mag), stroke = FALSE, fillOpacity = 0.7) %>% 
-   addMarkers(~long, ~lat, label = ~htmlEscape(Name))
+   addLabelOnlyMarkers(~long, ~lat, label = as.character(paste("Magnitude: ",quakes$mag)))  #adding a pop up 
 
 
 

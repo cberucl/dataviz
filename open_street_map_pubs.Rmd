@@ -1,0 +1,99 @@
+---
+title: "London Pubs"
+author: "Fiona Spooner"
+date: "10/10/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+#mostly stolen from https://dominicroye.github.io/en/2018/accessing-openstreetmap-data-with-r/
+
+#load packages
+library(tidyverse)
+library(osmdata)
+library(sf)
+library(ggmap)
+
+
+```
+
+```{r}
+
+#building the query
+q <- getbb("London")%>%
+      opq()%>%
+       add_osm_feature("amenity", "pub")
+
+
+str(q)
+
+```
+
+
+```{r}
+
+pubs <- osmdata_sf(q)
+pubs
+
+```
+
+```{r}
+#our background map
+lon_map <- get_map(getbb("London"),maptype = "toner-background")
+
+#final map
+ggmap(lon_map)+
+  geom_sf(data=pubs$osm_points,
+          inherit.aes =FALSE,
+          colour="#238443",
+          fill="#004529",
+          alpha=.2,
+          size=2,
+          shape=21)+
+  labs(x="",y="")
+
+
+```
+
+
+Building own bounding box
+
+```{r}
+
+cber<-data.frame(lon = -0.131900, lat = 51.523811)
+
+m <- matrix(c(cber$lon -0.05,cber$lon+0.05,cber$lat - 0.05,cber$lat +0.05),ncol=2,byrow=TRUE)
+row.names(m) <- c("x","y")
+colnames(m) <- c("min","max")
+```
+
+Building the query
+
+```{r}
+q <- m %>% 
+      opq () %>%
+         add_osm_feature("amenity","pub")
+
+cber_pubs <- osmdata_sf(q)
+
+```
+
+
+```{r}
+cber_map <- get_map(m,maptype = "toner-background")
+
+
+ggmap(cber_map)+
+  geom_sf(data=cber_pubs$osm_points,
+          inherit.aes =FALSE,
+          colour="#238443",
+          fill="#004529",
+          alpha=.5,
+          size=4,
+          shape=21)+
+  labs(x="",y="")
+```

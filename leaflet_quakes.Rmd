@@ -1,0 +1,37 @@
+---
+title: "Fiji Quakes"
+author: "Fiona Spooner"
+date: "10/10/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(leaflet)
+```
+
+
+```{r}
+data(quakes)
+head(quakes)
+
+pal <- colorNumeric(
+  palette = "Reds",
+  domain = quakes$mag)
+
+
+leaflet(quakes) %>%  
+  addProviderTiles(providers$CartoDB.Positron) %>%
+  setView(mean(quakes$long), mean(quakes$lat), zoom = 4)%>% 
+  addCircleMarkers(lng=quakes$long, lat=quakes$lat,radius = 0.01*quakes$depth, 
+                   color = ~pal(quakes$mag), stroke = FALSE, fillOpacity = 0.7) %>% 
+   addMarkers(~long, ~lat, label = ~htmlEscape(Name))
+
+
+
+
+
+```

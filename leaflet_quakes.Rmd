@@ -8,7 +8,7 @@ output: html_document
 Leaflet is a really good package for creating interactive maps. Here I've put together an example for visualising earthquake data from around Fiji.
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ```
 
 ```{r}
@@ -35,6 +35,9 @@ leaflet(quakes) %>%
 
 
 ```
+
+
+Lots of other basemaps available - http://leaflet-extras.github.io/leaflet-providers/preview/
 
 
 ```{r}

@@ -29,7 +29,7 @@ pal <- colorNumeric(
 leaflet(quakes) %>%  
   addProviderTiles("CartoDB.Positron") %>%
   setView(mean(quakes$long), mean(quakes$lat), zoom = 4)%>% 
-  addCircleMarkers(lng=quakes$long, lat=quakes$lat,radius = 0.01*quakes$depth, 
+  addCircleMarkers(lng=quakes$long, lat=quakes$lat,radius = quakes$mag, 
                    color = ~pal(quakes$mag), stroke = FALSE, fillOpacity = 0.7) %>% 
    addLabelOnlyMarkers(~long, ~lat, label = as.character(paste("Magnitude: ",quakes$mag)))  #adding a pop up 
 
@@ -44,7 +44,7 @@ Lots of other basemaps available - http://leaflet-extras.github.io/leaflet-provi
 leaflet(quakes) %>%  
   addProviderTiles("Stamen.Watercolor") %>%
   setView(mean(quakes$long), mean(quakes$lat), zoom = 4)%>% 
-  addCircleMarkers(lng=quakes$long, lat=quakes$lat,radius = 0.01*quakes$depth, 
+  addCircleMarkers(lng=quakes$long, lat=quakes$lat,radius = quakes$mag, 
                    color = ~pal(quakes$mag), stroke = FALSE, fillOpacity = 0.7) %>% 
    addLabelOnlyMarkers(~long, ~lat, label = as.character(paste("Magnitude: ",quakes$mag)))  #adding a pop up 
 
@@ -56,7 +56,7 @@ leaflet(quakes) %>%
 leaflet(quakes) %>%  
   addProviderTiles("Esri.WorldImagery") %>%
   setView(mean(quakes$long), mean(quakes$lat), zoom = 4)%>% 
-  addCircleMarkers(lng=quakes$long, lat=quakes$lat,radius = 0.01*quakes$depth, 
+  addCircleMarkers(lng=quakes$long, lat=quakes$lat,radius = quakes$mag, 
                    color = ~pal(quakes$mag), stroke = FALSE, fillOpacity = 0.7) %>% 
    addLabelOnlyMarkers(~long, ~lat, label = as.character(paste("Magnitude: ",quakes$mag)))  #adding a pop up 
 
